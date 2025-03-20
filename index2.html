@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Rental Service</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #333;
+            padding: 20px;
+            color: white;
+        }
+
+        header .logo h1 {
+            font-size: 30px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+        }
+
+        nav ul li {
+            margin-left: 20px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+        }
+
+        .hero-image img {
+            width: 100%;
+            height: auto;
+        }
+
+        .hero-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            text-align: center;
+        }
+
+        section {
+            padding: 40px;
+            margin: 20px 0;
+        }
+
+        h2 {
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        .car-list {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+
+        .car {
+            background-color: white;
+            padding: 15px;
+            text-align: center;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            width: 250px;
+        }
+
+        .car img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+
+        .car h3 {
+            margin-top: 10px;
+            font-size: 20px;
+        }
+
+        .car p {
+            font-size: 16px;
+            margin: 10px 0;
+        }
+
+        .contact form {
+            display: flex;
+            flex-direction: column;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .contact input,
+        .contact textarea,
+        .contact button {
+            margin: 10px 0;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .hamburger {
+                display: block;
+                font-size: 30px;
+            }
+
+            nav ul {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                background-color: #333;
+                position: absolute;
+                top: 60px;
+                left: 0;
+            }
+
+            nav ul li {
+                padding: 10px;
+                text-align: center;
+            }
+
+            nav ul li a {
+                font-size: 22px;
+            }
+
+            nav ul.show {
+                display: flex;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="logo">
+            <h1>CarRentals</h1>
+        </div>
+        <!-- Dynamic Navigation Menu -->
+        <nav id="navbar">
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About Us</a></li>
+                <li><a href="#services">Our Cars</a></li>
+                <li><a href="#contact">Contact Us</a></li>
+            </ul>
+        </nav>
+        <!-- Hamburger Menu for Mobile -->
+        <div class="hamburger" onclick="toggleMenu()">
+            &#9776;
+        </div>
+    </header>
+
+    <!-- Home Section -->
+    <section id="home" class="home">
+        <div class="hero-image">
+            <img src="https://via.placeholder.com/1200x500" alt="Car Rental Showcase">
+        </div>
+        <div class="hero-text">
+            <h2>Welcome to CarRentals</h2>
+            <p>Your trusted choice for car rentals on your next adventure.</p>
+        </div>
+    </section>
+
+    <!-- About Us Section -->
+    <section id="about" class="about">
+        <h2>About Us</h2>
+        <p>At CarRentals, we offer a wide range of vehicles for all your travel needs, whether for business or leisure. Our commitment is to provide affordable and reliable car rental services, with flexible options to suit your needs.</p>
+    </section>
+
+    <!-- Our Services Section -->
+    <section id="services" class="services">
+        <h2>Our Cars</h2>
+        <div class="car-list">
+            <div class="car">
+                <img src="https://via.placeholder.com/300x200" alt="Sedan">
+                <h3>Sedan</h3>
+                <p>Price: $50/day</p>
+            </div>
+            <div class="car">
+                <img src="https://via.placeholder.com/300x200" alt="SUV">
+                <h3>SUV</h3>
+                <p>Price: $75/day</p>
+            </div>
+            <div class="car">
+                <img src="https://via.placeholder.com/300x200" alt="Convertible">
+                <h3>Convertible</h3>
+                <p>Price: $100/day</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Us Section -->
+    <section id="contact" class="contact">
+        <h2>Contact Us</h2>
+        <p>For inquiries or bookings, feel free to reach out!</p>
+        <form action="#" method="POST">
+            <input type="text" placeholder="Your Name" required>
+            <input type="email" placeholder="Your Email" required>
+            <textarea placeholder="Your Message" required></textarea>
+            <button type="submit">Send Message</button>
+        </form>
+    </section>
+
+    <!-- Footer Section -->
+    <footer>
+        <p>&copy; 2025 CarRentals | All rights reserved</p>
+    </footer>
+
+    <script>
+        // Toggle the menu visibility on mobile
+        function toggleMenu() {
+            const nav = document.querySelector('nav ul');
+            nav.classList.toggle('show');
+        }
+    </script>
+</body>
+</html>
+

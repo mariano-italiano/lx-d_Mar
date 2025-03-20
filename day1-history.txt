@@ -1,0 +1,250 @@
+sudo apt-get update; sudo apt-get install vim -y
+for pkg in docker.io docker-doc docker-compose docker-compose-v2 podman-docker containerd runc; do sudo apt-get remove $pkg; done
+sudo apt-get update
+sudo apt-get install ca-certificates curl
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+echo   "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+  $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}") stable" |   sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt-get update
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+docker ps
+sudo docker ps 
+docker ps
+usermod -aG docker student
+sudo usermod -aG docker student
+docker ps
+docker run hello-world
+docker ps
+docker ps -a 
+docker rm 12
+docker ps -a 
+docker version
+sudo ls -la /var/lib/docker/
+docker ps -a
+docker run nginx:1.19.2
+docker ps -a
+docker run --help
+docker run -d --name web1 nginx:1.19.2
+docker ps
+docker run -d --name web2 -e TESTVAR1=value1 -p 1234:80 httpd
+docker ps 
+docker ps --latest
+docker exec -it web1 hostname 
+docker exec -it web1 bash
+docker exec -it web1 ksh
+docker stop web1
+docker ps -a
+docker start web1
+docker exec -it web1 bash
+docker top web1
+docker logs web1
+docker logs web1 -f
+docker restart web1
+docker ps 
+docker logs web1
+docker pause web1
+docker ps 
+docker unpause web1
+docker ps 
+docker rename web2 web222
+docker ps 
+docker run -d --name redis1 --restart always --env app=redis redis:7.0-alpine 
+docker ps -a
+docker inspect redis1 
+docker network ls
+docker inspect --format '{{.NetworkSettings.IPAddress }}'  redis1 
+docker inspect redis1 | grep IPAddress -i 
+docker inspect redis1 | grep -i env 
+docker inspect redis1 | grep -i env -A 5
+docker inspect redis1 | grep -i env -A 9
+docker ps -a
+docker run -d --rm --name test hello-world
+docker ps -a
+docker run -d --name ubuntu ubuntu
+docker ps -a
+docker exec -it ubuntu bash
+docker start ubuntu
+docker exec -it ubuntu bash
+docker ps -a
+docker run -d --name ubuntu2 --entrypoint=tail  ubuntu -f /dev/null 
+dokcker ps 
+docker ps 
+tail -f /dev/null
+docker exec -it ubuntu2 bash
+docker search ubuntu
+docker pull ubuntu/zookeeper
+docker images
+docker rmi da86d489a7a6
+docker images
+docker ps 
+docker ps -a
+docker container prune 
+docker ps -a
+docker image prune --help
+docker images
+docker pull ubuntu/zookeeper
+docker images
+docker image prune -a
+docker images
+wget https://github.com/docker/hub-tool/releases/download/v0.4.6/hub-tool-linux-amd64.tar.gz
+tar -xvf hub-tool-linux-amd64.tar.gz
+sudo install hub-tool/hub-tool /usr/bin/
+hub-tool login
+hub-tool tag ls ubuntu/zookeeper 
+hub-tool tag ls ubuntu/zookeeper --all
+hub-tool tag ls ubuntu
+hub-tool tag ls ubuntu --all
+docker pull sha256:a94f2d41a126942baaecffc7d783beadba6f5255840d97514d5358e4eae4bdf9
+hub-tool tag ls centos
+docker ps 
+docker run -d --name nginx-custom -p 8081:80 nginx:alpine 
+docker ps -a
+docker exec -it 2c886e1f2d9f bash
+docker exec -it 2c886e1f2d9f sh
+vi index.html
+dockerps
+docker ps
+docker cp index.html nginx-custom:/usr/share/nginx/html/index.html 
+docker commit -a "Marcin" -m "My custom nginx application" nginx-custom
+docker images
+docker tag e38b84f73ad0 marcinkujawski/custom-web-application:1.0
+docker images
+docker run -d --name test-app -p 8082:80 marcinkujawski/custom-web-application:1.0 
+docker ps 
+docker login
+docker login -u markuj5@gmail.com
+docker push marcinkujawski/custom-web-application:1.0
+vi index2.html
+docker ps
+docker cp index2.html nginx-custom:/usr/share/nginx/html/index.html
+docker commit -a "Marcin" -m "Next version 1.1" nginx-custom
+docker image
+s
+docker images
+docker tag 4a0a9d58716a marcinkujawski/custom-web-application:1.1
+docker push marcinkujawski/custom-web-application:1.1
+sudo ls -la /etc/docker/
+sudo mkdir /etc/docker/certs.d/registry.lab.local
+sudo mkdir -p /etc/docker/certs.d/registry.lab.local
+scp student@192.168.1.110:/opt/harbor/ca.crt /etc/docker/certs.d/registry.lab.local/
+sudo vi /etc/docker/certs.d/registry.lab.local/ca.crt
+sudo systemctl restart docker
+docker logout
+sudo vi /etc/hosts
+docker login https://registry.lab.local
+docker images
+docker push marcinkujawski/custom-web-application:1.1 
+docker tag 4a0a9d58716a registry.lab.local/aplikacja1/application-test:1.0 
+dockr imgaes
+docker images
+docker push registry.lab.local/aplikacja1/application-test:1.0 
+docker diff 4a0a9d58716a 
+docker ps 
+docker ps -a
+docker start bb4a2bc7d44d 2c886e1f2d9f d6d9eb436f93 0d8a9cd65003 c91ead8105e9
+docker ps 
+docker diff nginx-custom
+docker build
+docker images
+docker image 
+docker ps
+docker 
+docker container ps
+docker container
+git clone https://github.com/mariano-italiano/lx-d_Mar.git
+cd lx-d_Mar/
+ls -la
+mv ../index* .
+ls -la
+mkdir docker
+cd docker/
+mkdir simple-nginx
+cd simple-nginx
+vi Dockerfile
+htpasswd -c .htpasswd 
+sudo apt install apache2-utils -y
+htpasswd -c .htpasswd 
+htpasswd -c .htpasswd john
+cat .htpasswd 
+vi default.conf
+vi Dockerfile
+docker build -t simple-nginx:0.1 .
+docker run -d --name simple-nginx -p 8083:80 simple-nginx:0.1
+docker ps
+cd ..
+mkdir ubuntu-custom
+cd ubuntu-custom
+vi Dockerfile
+docker build ubuntu-custom:1.0 .
+docker build -t ubuntu-custom:1.0 .
+vi Dockerfile 
+docker build -t ubuntu-custom:1.0 .
+docker run -d --name u20 ubuntu-custom:1.0
+docker ps 
+docker exec -it u20 bash
+docker exec -it ubuntu2 bash
+cd ..
+mkdir python-app
+cd python-app/
+vi Dockerfile
+vi requirements.txt
+vi app.py
+ls -la 
+docker build -t python-app:1.0 .
+docker images
+docker run -d --name python-app -p 8084:8080  python-app:1.0
+docker ps
+docker ps -a
+docker logs 0ea3e500137a
+vi req
+vi requirements.txt 
+vi app.py 
+docker build -t python-app:1.1 .
+docker run -d --name python-app2 -p 8084:8080  python-app:1.1
+docker ps
+docker logs python-app2
+cd ..
+mkdir postfix
+cd postfix/
+vi Dockerfile
+vi main.cf
+docker build -t postfix:1.0 .
+docker run -d --name p1 postfix:1.0 
+docker ps 
+docker logs p1
+docker exec -it p1 bash
+vi Dockerfile
+docker build -t postfix:1.1 .
+docker run -d --name p2 postfix:1.1 
+docker logs p2
+cd ..
+mkdir nginx-custom
+cd nginx-custom
+ls -la
+vi Dockerfile
+docker build -t nginx-custom:develop .
+docker run -d --name custom-nginx -p 9090:80 nginx-custom:develop
+docker ps 
+docker build -t nginx-custom:prod --build-arg BRANCH_NAME="prod" .
+docker run -d --name custom-nginx2 -p 9091:80 nginx-custom:prod
+sudo vi /etc/defaults
+vi /etc/profile
+vi /etc/login.defs 
+wget -O hadolint https://github.com/hadolint/hadolint/releases/download/v2.12.0/hadolint-Linux-x86_64
+sudo mv hadolint /usr/local/bin/hadolint
+sudo chmod +x /usr/local/bin/hadolint
+hadolint Dockerfile 
+hadolint ../ubuntu-custom/Dockerfile 
+hadolint ../python-app/Dockerfile 
+cd ../python-app/
+hadolint Dockerfile 
+cd ../postfix/
+hadolint Dockerfile 
+cd ../nginx-custom/
+hadolint Dockerfile 
+hadolint --ignore DL3006  Dockerfile 
+history
+history | awk '$1 > 20' | cut -c 8- ../../day1-history.txt
+history | awk '$1 > 20' | cut -c 8- > ../../day1-history.txt
