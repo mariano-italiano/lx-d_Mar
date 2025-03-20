@@ -1,6 +1,6 @@
 ## Dockerfile Best Practices
 
-- używaj tylko oficialnych obrazów jeśli możliwe
+- używaj tylko oficialnych obrazów jeśli możliwe + hardening
 - Alpine nie zawsze jest najlepszym wyborem - chociaż Alpine jest lekki, istnieją pewne znane problemy z wydajnością niektórych technologii oraz luki bezpieczeństwa (https://pythonspeed.com/articles/alpine-docker-python/)
 - ogranicz ilość warstw obrazu - każda instrukcja `RUN` w pliku Docker spowoduje utworzenie dodatkowej warstwy w ostatecznym obrazie, najlepszą praktyką jest ograniczenie liczby warstw, aby zachować lekkość obrazu
 - uruchamianie jako użytkownik inny niż root - uruchamianie kontenerów jako użytkownik niebędący rootem znacznie zmniejsza ryzyko eskalacji uprawnień kontener -> host
