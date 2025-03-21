@@ -1,0 +1,19 @@
+---
+services:
+  redis:
+    image: redis:6
+    container_name: redis
+    ports:
+      - "6379:6379"
+
+  python-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: python-app
+    ports: 
+      - "8080:5000"
+    depends_on:
+      - redis
+    volumes:
+      - .:/python-flask

@@ -1,0 +1,15 @@
+---
+services:
+  db: 
+    image: redis:6
+    container_name: redis
+    ports:
+      - "6379:6379"
+    hostname: redis
+
+  web:
+    image: nginx:1.19.2
+    container_name: nginx
+    ports:
+      - "80:80"
+    hostname: web

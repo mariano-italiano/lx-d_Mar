@@ -1,0 +1,305 @@
+docker network ls
+ip a
+docker ps 
+docker ps -a
+docker start p1 p2
+docker ps 
+ip a
+docker inspect p1
+ip a docker0
+ip a |grep docker0
+docker network inspect bridge 
+docker network inspect --format '{{.Containers[].Name}}' bridge
+docker network inspect --format '{{.Containers[*].Name}}' bridge
+docker network inspect --format '{{.Containers.Name}}' bridge
+docker network inspect --format '{{.Containers[0].Name}}' bridge
+docker network inspect bridge | jq -r '..Containers[*].Name'
+sudo apt  install jq -y
+sudo kill -9 2113; sudo apt  install jq -y
+docker network inspect bridge | jq -r '..Containers[*].Name'
+docker network inspect bridge | jq -r '..Containers[].Name'
+docker network inspect bridge | jq -r '..Containers'
+docker network inspect bridge | jq -r '.Containers'
+docker network inspect bridge | jq -r '.Containers[].Name'
+docker network inspect bridge | jq -r '[].Containers[].Name'
+docker network inspect bridge | jq -r '[0].Containers[].Name'
+docker network inspect bridge | jq -r '.[]'
+docker network inspect bridge | jq -r '.[0].Containers[].Name'
+docker ps
+docker exec -it p1 bash
+docker network create custombridge
+docker network ls
+docker run -d --name netshoot1 -it --network custombridge nicolaka/netshoot
+docker run -d --name netshoot2 -it --network custombridge nicolaka/netshoot
+docker ps
+docker exec -it netshoot1 bash
+docker inspect netshoot1
+ip a
+docker network ls
+ip a | grep cfab081bf64f
+docker inspect netshoot1
+docker exec -it netshoot1 bash
+docker exec -it p1 bash
+docker inspect p2
+docker exec -it p1 bash
+sudo iptables -L -v -n
+ip a
+sudo iptables -I DOCKER-USER -i docker0 -o br-cfab081bf64f -j ACCEPT 
+docker exec -it p1 bash
+docker exec -it netshoot1 bash
+sudo iptables -I DOCKER-USER -i br-cfab081bf64f -o docker0 -j ACCEPT 
+docker exec -it netshoot1 bash
+docker ps -a
+docker ps 
+docker run -d --name web-host --network host nginx:1.19.2
+docker ps 
+netstat
+sudo apt install net-tools
+netstat -vatunlp
+docker stop web-host 
+netstat -vatunlp
+docker start web-host 
+netstat -vatunlp
+docker run -d --name web-host2 nginx
+docker rm -f web-host2
+docker run -d --name web -p 80:80 nginx
+docker network create -d macvlan --subnet 192.168.1.0/24 --gateway 192.168.1.1 --ip-range 192.168.1.105/32 -o parent=ens33 macvlan1 
+docker network ls
+ip a  | grep f6422d1bde5f
+docker run -d --name web-macvlan --network macvlan1  nginx
+docker ps
+docker rm -f web-macvlan
+docker run -d --name web-macvlan --network macvlan1 -p 80:80 nginx
+docker ps\
+docker ps
+docker inspect web-macvlan
+docker rm -f web-macvlan
+docker run -d --name web-macvlan --network macvlan1 nginx
+docker inspect web-macvlan
+netstat -vatnulp
+curl http://192.168.1.105
+ip a
+docker network inspect macvlan1 
+ping 192.168.1.105
+docker ps
+docker exec -it web-macvlan 
+docker exec -it web-macvlan bash
+sudo iptables -L -v -n
+docker ps
+docker run -d --name web-macvlan2 --network macvlan1 nginx 
+docker run -d --name web-macvlan2 --network macvlan1 --ip 192.168.1.106 nginx
+docker rm -f web-macvlan2
+docker run -d --name web-macvlan2 --network macvlan1 --ip 192.168.1.106 nginx
+dopcker ps 
+docker sp
+docker ps
+docker inspect ca
+docker ps
+docker inspect ca
+docker inspect acc
+docker inspect ca
+curl http://192.168.1.106
+sudo systemctl status ufw
+docker inspect acc
+docker inspect ca
+docker ps 
+docker rm -f web-host web-macvlan web-macvlan2
+docker ps 
+docker run -d --name mac1 --network macvlan1 nginx 
+docker ps 
+docker inspect mac1
+curl http://192.168.1.105
+sudo iptables-save > config
+vi config
+sudo iptables-restore < config 
+sudo iptables -L -v -n
+curl http://192.168.1.105
+ping 192.168.1.1
+route -n 
+docker run -d --name no-connecion --network none nicolaka/netshoot:latest 
+docker ps
+docker ps -a
+docker rm -f no-connecion
+docker run -d --name no-connecion -it --network none nicolaka/netshoot:latest 
+docker ps -a
+docker ps
+docker exec -it no-connecion bash
+docker ps 
+docker run -d --name web10 -p 8080:80 nginx 
+docker ps 
+docker run -d --name web20 -P nginx 
+docker ps 
+docker network connect custombridge web10
+docker inspect web10
+docker exec -it web10 bash
+docker exec -it netshoot1 bash
+docker network disconnect custombridge web10 
+docker exec -it netshoot1 bash
+docker volume ls
+docker run -d --name web-anon -v /data1 nginx
+docker exec -it web-anon bash
+docker volume ls
+docker inspect web-anon | grep 6fa576e4ef97aaefa222fcdf3f241c1069420472561f1cfbad771c76b8510ff1
+docker inspect web-anon | grep 6fa576e4ef97aaefa222fcdf3f241c1069420472561f1cfbad771c76b8510ff1 -A 5 -B 5
+sudo ls -la /var/lib/docker/volumes/6fa576e4ef97aaefa222fcdf3f241c1069420472561f1cfbad771c76b8510ff1/_data 
+docker rm -f web-anon
+sudo ls -la /var/lib/docker/volumes/6fa576e4ef97aaefa222fcdf3f241c1069420472561f1cfbad771c76b8510ff1/_data 
+docker volume ls
+sudo ls -la /var/lib/docker/volumes/6fa576e4ef97aaefa222fcdf3f241c1069420472561f1cfbad771c76b8510ff1/_data 
+docker volume ls
+docker run -d --name web-anon -v /data1 nginx
+docker inspect web-anon | grep -i mount -A 5 -B 5
+docker volume ls
+sudo ls -la /var/lib/docker/volumes/18bffb6f9d9c65247f71c229e35e67ffe5bbce12a524f93e90cacb7391feb4ff/_data
+docker exec -it web-anon bash
+pwd
+docker run -d --name web-hostvol -v /home/student/lx-d_Mar:/data nginx
+docker exec -it web-hostvol bash
+docker volume ls
+docker inspect web-hostvol | grep -i mount -A 5 -B 5
+docker inspect web-hostvol | grep -i mount -A 10 -B 5
+docker create volume my_volume
+docker volume create my_volume
+docker volume ls
+sudo ls -la /var/lib/docker/volumes
+sudo ls -la /var/lib/docker/volumes/my_volume
+sudo ls -la /var/lib/docker/volumes/my_volume/_data/
+sudo vi /var/lib/docker/volumes/my_volume/_data/testfile.txt
+docker run -d --name web30 -v my_volume:/config nginx
+docker exec -it web30 bash
+sudo vi /var/lib/docker/volumes/my_volume/_data/testfile.txt
+sudo ls -la /var/lib/docker/volumes/my_volume/_data/
+df -h
+sudo -i 
+docker volume create --help
+docker volume create --opt device=/dev/docker_vg/docker_lv --opt type=btrfs docker-data
+docker volume ls
+docker inspect docker-data
+ls -la /var/lib/docker/volumes/docker-data/_data
+sudo ls -la /var/lib/docker/volumes/docker-data/_data
+sudo ls -la /var/lib/docker/volumes/d
+docker run -d --name web50 -v docker-data:/usr/share/nginx/html nginx
+docker ps
+docker exec -it web50 bash
+sudo ls -la /var/lib/docker/volumes/docker-data/_data
+df -h
+docker exec -it web50 bash
+df -h
+sudo ls -la /var/lib/docker/volumes/docker-data/_data -h
+docker volume ls
+docker volume rm 6fa576e4ef97aaefa222fcdf3f241c1069420472561f1cfbad771c76b8510ff1 
+docker volume ls
+docker ps -q
+docker stop $(docker ps -q)
+docker ps 
+docker ps -a
+docker container prune 
+docker ps -a
+mkdir compose
+cd compose/
+mkdir first-compose
+cd first-compose
+vi docker-compose.yaml
+docker compose up 
+docker compose up -d
+cd ..
+docker compose ps
+cd first-compose/
+docker compose ps
+docker ps 
+docker inspect redis
+cd ..
+mkdir flask-compose
+cd flask-compose
+vi docker-compose.yaml
+vi app.py
+vi requirements.txt
+vi Dockerfile
+vi docker-compose.yaml
+vi app.py
+vi requirements.txt
+vi Dockerfile
+ls -la
+docker compose up -d
+vi docker-compose.yaml
+docker compose up -d
+cd ..
+cd first-compose/
+ls -la
+docker compose down 
+cd ../flask-compose/
+docker compose up -d
+docker ps 
+docker compose ps 
+docker compose down
+docker compose up
+cd ../
+mkdir my-python-app
+cd my-python-app
+vi docker-compose.yaml
+docker compose pull 
+vi docker-compose.yaml
+docker compose pull 
+docker compose up -d
+docker compose ps
+docker ps
+cd ..
+docker ps 
+cd my-python-app/
+ls -la
+docker compose down
+docker ps -a
+docker compose up -d
+docker compose down
+docker compose up -d
+docker compose down
+docker compose up -d
+vi docker-compose.yaml 
+docker volume ls
+docker inspect my-python-app_pg_data
+sudo ls -la /var/lib/docker/volumes/my-python-app_pg_data/_data
+sudo ls -la /var/lib/docker/volumes/my-python-app_pg_data/_data/pgdata
+docker compose ps
+docker compose down -v
+sudo ls -la /var/lib/docker/volumes/my-python-app_pg_data/_data/pgdata
+vi docker-compose.yaml 
+docker compose up -d
+docker compose down
+docker compose up -d
+docker compose down
+cd ../
+mkdir wordpress
+cd wordpress/
+vi docker-compose.yaml
+docker compose up -d
+docker compose ps 
+docker compose down
+docker compose up -d
+docker volume ls
+docker compose down -v
+docker compose up -d
+cd .
+cd ..
+mkdir wiki
+cd wiki
+vi docker-compose.yaml
+cd ../wordpress/
+docker compose down
+cd ../wiki/
+docker compose up -d
+docker compose ps
+vi docker-compose.yaml 
+docker network ls
+docker run -d --it --net wiki_default --name debug nicolaka/netshoot 
+docker run -d -it --net wiki_default --name debug nicolaka/netshoot 
+docker inspect wiki_default
+docker compose ps
+vi docker-compose.yaml 
+docker compose down 
+docker rm -f debug
+docker compose down 
+docker-compose up
+cd ..
+git status
+history
+history | awk '$1 > 287' | cut -c 8- > day2-history.txt
